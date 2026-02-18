@@ -215,7 +215,7 @@ if term_files:
     
     # --- 1.1 Hourly ---
     with c1:
-        st.write("##### 📊 Hourly Report")
+        st.write("##### 📊 Hourly")
         if st.button("Convert Hourly 🚀", key="btn_hourly"):
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -258,7 +258,7 @@ if term_files:
     # --- 1.3 Term OG ---
     with c3:
         st.write("##### 💾 Term OG")
-        if st.button("Save Term OG 🚀", key="btn_term_og"):
+        if st.button("Term OG 🚀", key="btn_term_og"):
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
                 for f in term_files:
