@@ -278,7 +278,7 @@ st.markdown('<div class="sub-header">📂 2. E-Journal Files Convert</div>', uns
 ej_files = st.file_uploader("เลือกไฟล์ E-Journal (CSV)", type="csv", accept_multiple_files=True, key="ej_up")
 
 if ej_files:
-    ec1, ec2, ec3 = st.columns(3)
+    ec1, ec3, ec2 = st.columns(3)
 
     # --- 2.1 EJ Report (Updated Logic) ---
     with ec1:
@@ -300,9 +300,22 @@ if ej_files:
             
             st.success("เสร็จสิ้น!")
             st.download_button("📥 Download EJ Report", buf.getvalue(), "EJ_Report.zip", "application/zip")
+    # --- 2.2 EJ OG ---
+            with ec3:
+                st.write("##### 💾 EJ OG")
+                if st.button("Convert EJ OG 🚀", key="btn_ej_og"):
+                    buf = io.BytesIO()
+                    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+                        for f in ej_files:
+                            f.seek(0)
+                            df = pd.read_csv(f, header=None)
+                            s, d, suf = get_info_ejournal(df)
+                            zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
+                    st.success("เสร็จสิ้น!")
+                    st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
 
     # --- 2.3 Receipt Extract ---
-    with ec3:
+    with ec2:
         st.write("##### 🧾 Receipt Extract")
         if st.button("Convert Extract Receipt 🚀", key="btn_recon"):
             buf = io.BytesIO()
@@ -316,16 +329,4 @@ if ej_files:
             st.download_button("📥 Download Recon", buf.getvalue(), "Receipt_Extract.zip", "application/zip")
 
 
-    # --- 2.2 EJ OG ---
-        with ec2:
-            st.write("##### 💾 EJ OG")
-            if st.button("Convert EJ OG 🚀", key="btn_ej_og"):
-                buf = io.BytesIO()
-                with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
-                    for f in ej_files:
-                        f.seek(0)
-                        df = pd.read_csv(f, header=None)
-                        s, d, suf = get_info_ejournal(df)
-                        zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
-                st.success("เสร็จสิ้น!")
-                st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
+    
