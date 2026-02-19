@@ -301,18 +301,18 @@ if ej_files:
             st.success("เสร็จสิ้น!")
             st.download_button("📥 Download EJ Report", buf.getvalue(), "EJ_Report.zip", "application/zip")
     # --- 2.2 EJ OG ---
-            with ec3:
-                st.write("##### 💾 EJ OG")
-                if st.button("Convert EJ OG 🚀", key="btn_ej_og"):
-                    buf = io.BytesIO()
-                    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
-                        for f in ej_files:
-                            f.seek(0)
-                            df = pd.read_csv(f, header=None)
-                            s, d, suf = get_info_ejournal(df)
-                            zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
-                    st.success("เสร็จสิ้น!")
-                    st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
+    with ec3:
+        st.write("##### 💾 EJ OG")
+        if st.button("Convert EJ OG 🚀", key="btn_ej_og"):
+            buf = io.BytesIO()
+            with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+                for f in ej_files:
+                    f.seek(0)
+                    df = pd.read_csv(f, header=None)
+                    s, d, suf = get_info_ejournal(df)
+                    zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
+            st.success("เสร็จสิ้น!")
+            st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
 
     # --- 2.3 Receipt Extract ---
     with ec2:
