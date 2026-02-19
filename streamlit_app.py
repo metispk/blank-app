@@ -278,7 +278,7 @@ st.markdown('<div class="sub-header">📂 2. E-Journal Files Convert</div>', uns
 ej_files = st.file_uploader("เลือกไฟล์ E-Journal (CSV)", type="csv", accept_multiple_files=True, key="ej_up")
 
 if ej_files:
-    ec1, ec3, ec2 = st.columns(3)
+    ec1, ec2, ec3 = st.columns(3)
 
     # --- 2.1 EJ Report (Updated Logic) ---
     with ec1:
