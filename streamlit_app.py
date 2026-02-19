@@ -258,7 +258,7 @@ if term_files:
     # --- 1.3 Term OG ---
     with c3:
         st.write("##### 💾 Term OG")
-        if st.button("Term OG 🚀", key="btn_term_og"):
+        if st.button("Convert Term OG 🚀", key="btn_term_og"):
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
                 for f in term_files:
@@ -301,24 +301,10 @@ if ej_files:
             st.success("เสร็จสิ้น!")
             st.download_button("📥 Download EJ Report", buf.getvalue(), "EJ_Report.zip", "application/zip")
 
-    # --- 2.2 EJ OG ---
-    with ec2:
-        st.write("##### 💾 EJ OG")
-        if st.button("Save EJ OG 🚀", key="btn_ej_og"):
-            buf = io.BytesIO()
-            with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
-                for f in ej_files:
-                    f.seek(0)
-                    df = pd.read_csv(f, header=None)
-                    s, d, suf = get_info_ejournal(df)
-                    zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
-            st.success("เสร็จสิ้น!")
-            st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
-
     # --- 2.3 Receipt Extract ---
     with ec3:
         st.write("##### 🧾 Receipt Extract")
-        if st.button("Extract Receipt 🚀", key="btn_recon"):
+        if st.button("Convert Extract Receipt 🚀", key="btn_recon"):
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
                 for f in ej_files:
@@ -328,3 +314,18 @@ if ej_files:
                         zf.writestr(f"Recon_{f.name}", df_out.to_csv(index=False, encoding='utf-8-sig'))
             st.success("เสร็จสิ้น!")
             st.download_button("📥 Download Recon", buf.getvalue(), "Receipt_Extract.zip", "application/zip")
+
+
+    # --- 2.2 EJ OG ---
+        with ec2:
+            st.write("##### 💾 EJ OG")
+            if st.button("Convert EJ OG 🚀", key="btn_ej_og"):
+                buf = io.BytesIO()
+                with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+                    for f in ej_files:
+                        f.seek(0)
+                        df = pd.read_csv(f, header=None)
+                        s, d, suf = get_info_ejournal(df)
+                        zf.writestr(f"EJ_OG{s}{suf}.csv", df.to_csv(index=False, header=False, encoding='utf-8-sig'))
+                st.success("เสร็จสิ้น!")
+                st.download_button("📥 Download EJ OG", buf.getvalue(), "EJ_OG.zip", "application/zip")
